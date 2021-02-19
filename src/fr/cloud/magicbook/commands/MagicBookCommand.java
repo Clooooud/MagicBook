@@ -1,18 +1,23 @@
 package fr.cloud.magicbook.commands;
 
 import fr.cloud.magicbook.MagicBook;
+import fr.cloud.magicbook.books.Book;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MagicBookCommand implements TabExecutor {
 
-    private MagicBook plugin;
+    private final MagicBook plugin;
 
     public MagicBookCommand(MagicBook plugin) {
         this.plugin = plugin;
@@ -20,8 +25,8 @@ public class MagicBookCommand implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (args.length != 1) {
-            sender.sendMessage("§cUsage: /magicbook <reload/version>");
+        if (args.length < 1) {
+            sender.sendMessage("§cUsage: /magicbook <reload/version/give>");
             return true;
         }
 
@@ -35,6 +40,37 @@ public class MagicBookCommand implements TabExecutor {
             case "version":
                 sender.sendMessage("§7MagicBook §av" + plugin.getDescription().getVersion() + "\n§7by " + plugin.getDescription().getAuthors().get(0));
                 break;
+            case "give": {
+                if (args.length < 3) {
+                    sender.sendMessage("Usage: /magicbook give <player> <name> [infinite:y/n]");
+                    sender.sendMessage("§cListe des livres: §5" + Book.getBookSet().stream().map(Book::getRegistryName).collect(Collectors.joining("§c, §5")));
+                    return true;
+                }
+
+                Player player = Bukkit.getPlayer(args[1]);
+                if (player == null) {
+                    sender.sendMessage("§cErreur: Joueur introuvable");
+                    return true;
+                }
+
+                Book books = Book.getBook(args[2]);
+                if (books == null) {
+                    sender.sendMessage("§cUsage: /magicbook give <player> <name> [infinite:y/n]");
+                    sender.sendMessage("§cListe des livres: §5" + Book.getBookSet().stream().map(Book::getRegistryName).collect(Collectors.joining("§c, §5")));
+                    return true;
+                }
+
+                boolean infinite = false;
+                if (args.length == 4) {
+                    if (args[3].equalsIgnoreCase("y")) {
+                        infinite = true;
+                    }
+                }
+
+                ItemStack stack = infinite ? books.getStack(-1) : books.getStack();
+                player.getInventory().addItem(stack);
+                sender.sendMessage("§5Et voici ton livre !");
+            }
         }
 
         return true;
@@ -42,8 +78,21 @@ public class MagicBookCommand implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        if (args.length == 1) {
-            return Arrays.asList("reload", "version");
+        switch (args.length) {
+            case 1:
+                return Arrays.asList("reload", "version", "give");
+            case 2:
+                if (args[0].equalsIgnoreCase("give")) {
+                    return Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+                }
+            case 3:
+                if (args[0].equalsIgnoreCase("give")) {
+                    return Book.getBookSet().stream().map(Book::getRegistryName).filter(s -> s.startsWith(args[0].toLowerCase())).collect(Collectors.toList());
+                }
+            case 4:
+                if (args[0].equalsIgnoreCase("give")) {
+                    return Arrays.asList("y", "n");
+                }
         }
         return Collections.emptyList();
     }

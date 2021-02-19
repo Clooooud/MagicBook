@@ -1,7 +1,6 @@
 package fr.cloud.magicbook;
 
 import fr.cloud.magicbook.books.Book;
-import fr.cloud.magicbook.commands.BookCommand;
 import fr.cloud.magicbook.commands.MagicBookCommand;
 import fr.cloud.magicbook.config.ConfigCreator;
 import fr.cloud.magicbook.events.EventListener;
@@ -20,11 +19,6 @@ public class MagicBook extends JavaPlugin {
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
 
-        PluginCommand book = getCommand("book");
-        book.setExecutor(new BookCommand());
-        book.setPermission("magicbook.admin");
-        book.setPermissionMessage("§cTu n'as pas accès à cette commande.");
-
         PluginCommand magicBook = getCommand("magicbook");
         magicBook.setExecutor(new MagicBookCommand(this));
         magicBook.setPermission("magicbook.admin");
@@ -37,10 +31,6 @@ public class MagicBook extends JavaPlugin {
         if (worldGuard == null) {
             getLogger().warning("WorldGuard isn't detected, ignoring this feature.");
         } else {
-            if (Double.parseDouble(worldGuard.getDescription().getVersion()) < 6.2) {
-                getLogger().severe(String.format("Install version 6.2 or greater of WorldGuard (yours: %s)", worldGuard.getDescription().getVersion()));
-                return;
-            }
             worldGuardManager = new WorldGuardManager(this);
             worldGuardManager.load();
         }
