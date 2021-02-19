@@ -81,9 +81,7 @@ public class ConfigCreator {
             PrintStream bufferedWriter = new PrintStream(new FileOutputStream(file), true, "UTF8");
             bufferedWriter.append(configuration.saveToString());
             bufferedWriter.close();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (UnsupportedEncodingException | FileNotFoundException e) {
             e.printStackTrace();
         }
     }
