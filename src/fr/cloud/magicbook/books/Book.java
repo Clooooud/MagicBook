@@ -42,6 +42,10 @@ public class Book {
         if (player == null) {
             return;
         }
+        resetCooldown(player);
+    }
+
+    public static void resetCooldown(Player player) {
         bookSet.forEach(book -> cooldowns.get(book).remove(player));
     }
 

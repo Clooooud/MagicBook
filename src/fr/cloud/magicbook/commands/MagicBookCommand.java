@@ -26,7 +26,7 @@ public class MagicBookCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length < 1) {
-            sender.sendMessage("§cUsage: /magicbook <reload/version/give>");
+            sender.sendMessage("§cUsage: /magicbook <reload/version/give/resetcd>");
             return true;
         }
 
@@ -40,6 +40,24 @@ public class MagicBookCommand implements TabExecutor {
             case "version":
                 sender.sendMessage("§7MagicBook §av" + plugin.getDescription().getVersion() + "\n§7by " + plugin.getDescription().getAuthors().get(0));
                 break;
+            case "resetcd": {
+                if (args.length > 1) {
+                    Player player = Bukkit.getPlayer(args[1]);
+                    if (player == null) {
+                        sender.sendMessage("§cErreur: Joueur introuvable");
+                        return true;
+                    }
+
+                    Book.resetCooldown(player);
+                } else {
+                    if (!(sender instanceof Player)) {
+                        sender.sendMessage("§cUsage: /magicbook resetcd <player>");
+                        return true;
+                    }
+
+                    Book.resetCooldown((Player) sender);
+                }
+            }
             case "give": {
                 if (args.length < 3) {
                     sender.sendMessage("Usage: /magicbook give <player> <name> [infinite:y/n]");
@@ -80,9 +98,9 @@ public class MagicBookCommand implements TabExecutor {
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
         switch (args.length) {
             case 1:
-                return Arrays.asList("reload", "version", "give");
+                return Arrays.asList("reload", "version", "give", "resetcd");
             case 2:
-                if (args[0].equalsIgnoreCase("give")) {
+                if (args[0].equalsIgnoreCase("give") || args[0].equalsIgnoreCase("resetcd")) {
                     return Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
                 }
             case 3:

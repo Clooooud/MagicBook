@@ -5,6 +5,7 @@ import fr.cloud.magicbook.books.Book;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -49,6 +50,11 @@ public class EventListener implements Listener {
         book.launchSpell(e);
 
         e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent e) {
+        Book.resetCooldown(e.getEntity());
     }
 
     @EventHandler
