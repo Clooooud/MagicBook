@@ -54,17 +54,9 @@ public class ConfigCreator {
                 fields.forEach(field -> {
                     try {
                         if (BookCallable.class.isAssignableFrom(field.getDeclaringClass())) {
-                            Object value = field.get(book.getSpell());
-                            if (value instanceof String) {
-
-                            }
-                            configuration.set(book.getRegistryName() + "." + field.getName(), value);
+                            configuration.set(book.getRegistryName() + "." + field.getName(), field.get(book.getSpell()));
                         } else {
-                            Object value = field.get(book);
-                            if (value instanceof String) {
-
-                            }
-                            configuration.set(book.getRegistryName() + "." + field.getName(), value);
+                            configuration.set(book.getRegistryName() + "." + field.getName(), field.get(book));
                         }
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
