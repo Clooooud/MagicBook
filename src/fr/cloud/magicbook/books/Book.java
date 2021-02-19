@@ -19,6 +19,8 @@ import java.util.*;
 
 public class Book {
 
+    private static final String SEPARATOR = "#";
+
     @Getter private static final Set<Book> bookSet = new HashSet<>();
 
     private static final Map<Book, Map<Player, Long>> cooldowns = new HashMap<>();
@@ -56,11 +58,11 @@ public class Book {
 
         final String hiddenString = ChatColor.stripColor(lore.get(3));
 
-        if (hiddenString.split("&").length != 2) {
+        if (hiddenString.split(SEPARATOR).length != 2) {
             return null;
         }
 
-        return bookSet.stream().filter(book -> book.getRegistryName().equals(hiddenString.split("&")[0])).findAny().orElse(null);
+        return bookSet.stream().filter(book -> book.getRegistryName().equals(hiddenString.split(SEPARATOR)[0])).findAny().orElse(null);
     }
 
     @Parameter @Getter private final String name, desc;
@@ -143,7 +145,7 @@ public class Book {
         List<String> lore = itemMeta.getLore();
 
         String hiddenString = ChatColor.stripColor(lore.get(3));
-        return Integer.parseInt(hiddenString.split("&")[1]);
+        return Integer.parseInt(hiddenString.split(SEPARATOR)[1]);
     }
 
     public ItemStack getStack() {
@@ -157,6 +159,6 @@ public class Book {
     }
 
     private String getHiddenString(int amount) {
-        return "§0§k" + registryName + "&" + amount;
+        return "§0§k" + registryName + SEPARATOR + amount;
     }
 }
