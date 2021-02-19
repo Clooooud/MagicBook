@@ -1,0 +1,8 @@
+name: MagicBook
+main: fr.cloud.magicbook.MagicBook
+version: "1.0"
+author: Cloud
+softdepend: [WorldGuard]
+commands:
+    book:
+    magicbook:
