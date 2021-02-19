@@ -97,7 +97,7 @@ public class Book {
         if (cooldowns.get(this).containsKey(player)) {
             double cooldown = cooldowns.get(this).get(player) - System.currentTimeMillis();
             if (cooldown > 0) {
-                player.sendMessage(String.format("§5Tu dois encore attendre %s secondes pour lancer ce sort.", (cooldown / 1000)));
+                player.sendMessage(String.format("§cTu dois encore attendre %s secondes pour lancer ce sort.", (cooldown / 1000)));
                 return;
             }
 
@@ -105,7 +105,7 @@ public class Book {
         }
 
         if (player.hasMetadata("silence")) {
-            player.sendMessage("§5Tu es sous l'effet d'un silence ! Tu ne peux donc pas lancer de sorts !");
+            player.sendMessage("§cTu es sous l'effet d'un silence ! Tu ne peux donc pas lancer de sorts !");
             return;
         }
 
@@ -113,7 +113,7 @@ public class Book {
 
             Player target = SpellUtils.getTarget(player, ((TargetCallable) spell).getRange());
             if (target == null || target.isDead()) {
-                player.sendMessage("§5Aucun joueur n'est dans la portée.");
+                player.sendMessage("§cAucun joueur n'est dans la portée.");
                 return;
             }
 

@@ -43,7 +43,7 @@ public class EventListener implements Listener {
         }
 
         if(e.getItem().getAmount() > 1) {
-            e.getPlayer().sendMessage("§5Vous ne pouvez utiliser les livres s'ils sont stackés");
+            e.getPlayer().sendMessage("§cVous ne pouvez utiliser les livres s'ils sont stackés");
             return;
         }
 

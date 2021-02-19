@@ -14,12 +14,12 @@ public class HealCallable implements BookCallable {
         Player player = event.getPlayer();
 
         if(player.getHealth() == 20) {
-            player.sendMessage("§5Tu as déjà toute ta vie !");
+            player.sendMessage("§cTu as déjà toute ta vie !");
             return false;
         }
 
         player.setHealth(healthHealed + player.getHealth() > 20 ? 20 : healthHealed + player.getHealth());
-        player.sendMessage("§5Tu as été soigné !");
+        player.sendMessage("§aTu as été soigné !");
 
         return true;
     }

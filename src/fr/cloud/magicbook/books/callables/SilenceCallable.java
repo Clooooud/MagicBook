@@ -18,8 +18,8 @@ public class SilenceCallable implements TargetCallable {
 
         JavaPlugin plugin = getPlugin();
         target.setMetadata("silence", new FixedMetadataValue(plugin, System.currentTimeMillis() + 2500));
-        target.sendMessage("§5Vous avez été silence par " + player.getName());
-        player.sendMessage("§5Vous avez silence " + target.getName());
+        target.sendMessage("§cVous avez été silence par " + player.getName());
+        player.sendMessage("§aVous avez silence " + target.getName());
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> target.removeMetadata("silence", plugin), (long) (duration*20));
         return true;

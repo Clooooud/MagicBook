@@ -60,7 +60,7 @@ public class MagicBookCommand implements TabExecutor {
             }
             case "give": {
                 if (args.length < 3) {
-                    sender.sendMessage("Usage: /magicbook give <player> <name> [infinite:y/n]");
+                    sender.sendMessage("§cUsage: /magicbook give <player> <name> [infinite:y/n]");
                     sender.sendMessage("§cListe des livres: §5" + Book.getBookSet().stream().map(Book::getRegistryName).collect(Collectors.joining("§c, §5")));
                     return true;
                 }
@@ -87,7 +87,7 @@ public class MagicBookCommand implements TabExecutor {
 
                 ItemStack stack = infinite ? books.getStack(-1) : books.getStack();
                 player.getInventory().addItem(stack);
-                sender.sendMessage("§5Et voici ton livre !");
+                sender.sendMessage("§aEt voici ton livre !");
             }
         }
 
