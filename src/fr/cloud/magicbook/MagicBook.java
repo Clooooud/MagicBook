@@ -8,6 +8,7 @@ import fr.cloud.magicbook.events.EventListener;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MagicBook extends JavaPlugin {
@@ -32,9 +33,14 @@ public class MagicBook extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        if (Bukkit.getPluginManager().getPlugin("WorldGuard") == null) {
+        Plugin worldGuard = Bukkit.getPluginManager().getPlugin("WorldGuard");
+        if (worldGuard == null) {
             getLogger().warning("WorldGuard isn't detected, ignoring this feature.");
         } else {
+            if (Double.parseDouble(worldGuard.getDescription().getVersion()) < 6.2) {
+                getLogger().severe(String.format("Install version 6.2 or greater of WorldGuard (yours: %s)", worldGuard.getDescription().getVersion()));
+                return;
+            }
             worldGuardManager = new WorldGuardManager(this);
             worldGuardManager.load();
         }
