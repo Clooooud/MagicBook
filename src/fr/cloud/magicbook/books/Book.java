@@ -25,12 +25,12 @@ public class Book {
 
     public static void loadBooks() {
 
-        bookSet.add(new Book("Geyser", "Fais apparaître un geyser sous le joueur cibl\u00e9", "geyser", 3, new GeyserCallable(), 15));
+        bookSet.add(new Book("Geyser", "Fais apparaître un geyser sous le joueur ciblé", "geyser", 3, new GeyserCallable(), 15));
         bookSet.add(new Book("Heal", "Redonne 4 coeurs", "heal", 3, new HealCallable(), 30));
-        bookSet.add(new Book("Silence", "Emp\u00eache le joueur cibl\u00e9 de lancer des sorts", "silence", 3, new SilenceCallable(), 45));
-        bookSet.add(new Book("Poison", "Empoisonne le joueur cibl\u00e9", "poison", 3, new PoisonCallable(), 15));
-        bookSet.add(new Book("Drain", "Vole 1 coeur au joueur cibl\u00e9", "drain", 3, new DrainCallable(), 15));
-        bookSet.add(new Book("T\u00e9l\u00e9portation", "T\u00e9l\u00e9porte au bloc vis\u00e9", "teleport", 3, new TeleportCallable(), 15));
+        bookSet.add(new Book("Silence", "Empêche le joueur ciblé de lancer des sorts", "silence", 3, new SilenceCallable(), 45));
+        bookSet.add(new Book("Poison", "Empoisonne le joueur ciblé", "poison", 3, new PoisonCallable(), 15));
+        bookSet.add(new Book("Drain", "Vole 1 coeur au joueur ciblé", "drain", 3, new DrainCallable(), 15));
+        bookSet.add(new Book("Téléportation", "Téléporte au bloc visé", "teleport", 3, new TeleportCallable(), 15));
         bookSet.add(new Book("Saut", "Propulse vers l'avant", "jump", 3, new JumpCallable(), 25));
 
         bookSet.forEach(book -> cooldowns.put(book, new HashMap<>()));
