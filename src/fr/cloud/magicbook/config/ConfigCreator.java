@@ -20,6 +20,8 @@ public class ConfigCreator {
     private File file;
     private FileConfiguration configuration;
 
+    private Map<Book, List<Field>> configurableFields;
+
     public ConfigCreator(MagicBook plugin) {
         this.plugin = plugin;
         file = new File(plugin.getDataFolder(), "book.yml");
@@ -27,44 +29,24 @@ public class ConfigCreator {
 
     @SneakyThrows
     public void load() {
-        if (file.exists()) {
-            configuration = YamlConfiguration.loadConfiguration(file);
-            getConfigurableFields().forEach(((book, fields) -> fields.forEach(field -> {
-                try {
-                    if (BookCallable.class.isAssignableFrom(field.getDeclaringClass())) {
-                        configuration.addDefault(book.getRegistryName() + "." + field.getName(), field.get(book.getSpell()));
-                        field.set(book.getSpell(), configuration.get(book.getRegistryName() + "." + field.getName()));
-                    } else {
-                        configuration.addDefault(book.getRegistryName() + "." + field.getName(), field.get(book));
-                        field.set(book, configuration.get(book.getRegistryName() + "." + field.getName()));
-                    }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+
+        configurableFields = getConfigurableFields();
+        createFile();
+        setDefaults();
+
+        configurableFields.forEach(((book, fields) -> fields.forEach(field -> {
+            try {
+                if (BookCallable.class.isAssignableFrom(field.getDeclaringClass())) {
+                    field.set(book.getSpell(), configuration.get(book.getRegistryName() + "." + field.getName()));
+                } else {
+                    field.set(book, configuration.get(book.getRegistryName() + "." + field.getName()));
                 }
-            })));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        })));
 
-            configuration.options().copyDefaults(true);
-
-        } else {
-            file.getParentFile().mkdirs();
-            file.createNewFile();
-            configuration = YamlConfiguration.loadConfiguration(file);
-
-            getConfigurableFields().forEach(((book, fields) -> {
-                fields.forEach(field -> {
-                    try {
-                        if (BookCallable.class.isAssignableFrom(field.getDeclaringClass())) {
-                            configuration.set(book.getRegistryName() + "." + field.getName(), field.get(book.getSpell()));
-                        } else {
-                            configuration.set(book.getRegistryName() + "." + field.getName(), field.get(book));
-                        }
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                });
-            }));
-        }
-
+        configuration.options().copyDefaults(true);
         save();
     }
 
@@ -76,6 +58,33 @@ public class ConfigCreator {
         } catch (UnsupportedEncodingException | FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void createFile() {
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        configuration = YamlConfiguration.loadConfiguration(file);
+    }
+
+    private void setDefaults() {
+        configurableFields.forEach(((book, fields) -> fields.forEach(field -> {
+            try {
+                if (BookCallable.class.isAssignableFrom(field.getDeclaringClass())) {
+                    configuration.addDefault(book.getRegistryName() + "." + field.getName(), field.get(book.getSpell()));
+                } else {
+                    configuration.addDefault(book.getRegistryName() + "." + field.getName(), field.get(book));
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        })));
     }
 
     private Map<Book, List<Field>> getConfigurableFields() {

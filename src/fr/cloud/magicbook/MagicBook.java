@@ -43,8 +43,5 @@ public class MagicBook extends JavaPlugin {
 
         configCreator = new ConfigCreator(this);
         configCreator.load();
-
-
-        System.out.println(Book.getBook("heal").getBaseAmount());
     }
 }
