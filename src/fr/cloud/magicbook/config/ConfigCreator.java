@@ -27,7 +27,6 @@ public class ConfigCreator {
         file = new File(plugin.getDataFolder(), "book.yml");
     }
 
-    @SneakyThrows
     public void load() {
 
         configurableFields = getConfigurableFields();
