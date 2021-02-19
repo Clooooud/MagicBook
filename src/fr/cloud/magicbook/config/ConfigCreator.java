@@ -9,7 +9,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -109,16 +108,5 @@ public class ConfigCreator {
             fields.put(book, fieldList);
         });
         return fields;
-    }
-
-    private String hexToAscii(String hexStr) {
-        StringBuilder output = new StringBuilder();
-
-        for (int i = 0; i < hexStr.length(); i += 2) {
-            String str = hexStr.substring(i, i + 2);
-            output.append((char) Integer.parseInt(str, 16));
-        }
-
-        return output.toString();
     }
 }
