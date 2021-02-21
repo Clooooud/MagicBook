@@ -88,7 +88,7 @@ public class Book {
 
         MagicBook plugin = (MagicBook) Bukkit.getPluginManager().getPlugin("MagicBook");
         if (plugin.getWorldGuardManager() != null) {
-            if (!plugin.getWorldGuardManager().isPlayerAllowed(player)) {
+            if (!plugin.getWorldGuardManager().canPlayerCastSpell(player)) {
                 player.sendMessage("§cTu ne peux pas utiliser de sort ici");
                 return;
             }
@@ -118,7 +118,7 @@ public class Book {
             }
 
             if (plugin.getWorldGuardManager() != null) {
-                if (!plugin.getWorldGuardManager().isPlayerAllowed(target)) {
+                if (!plugin.getWorldGuardManager().canPlayerCastSpell(target)) {
                     player.sendMessage("§cCe joueur est dans une zone protégée");
                     return;
                 }

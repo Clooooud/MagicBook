@@ -41,7 +41,7 @@ public class WorldGuardManager {
         plugin.getLogger().fine(String.format("WorldGuard Flag (%s) has been loaded", BOOK_FLAG.getName()));
     }
 
-    public boolean isPlayerAllowed(Player player) {
+    public boolean canPlayerCastSpell(Player player) {
         RegionContainer container = WorldGuardPlugin.inst().getRegionContainer();
         RegionQuery query = container.createQuery();
         ApplicableRegionSet set = query.getApplicableRegions(player.getLocation());
