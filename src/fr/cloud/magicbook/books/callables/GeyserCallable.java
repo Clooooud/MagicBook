@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 public class GeyserCallable implements TargetCallable {
 
@@ -21,8 +22,7 @@ public class GeyserCallable implements TargetCallable {
     @Override
     public boolean run(PlayerInteractEvent event, Player target) {
 
-        target.setNoDamageTicks(target.getMaximumNoDamageTicks());
-        Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> target.setVelocity(target.getVelocity().setY(1)), 1);
+        target.setVelocity(new Vector(0, 1, 0));
 
         if(target.getHealth() >= damage)
             target.setHealth(target.getHealth()-damage);
