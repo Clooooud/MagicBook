@@ -57,6 +57,7 @@ public class MagicBookCommand implements TabExecutor {
 
                     Book.resetCooldown((Player) sender);
                 }
+                break;
             }
             case "give": {
                 if (args.length < 3) {
@@ -88,6 +89,7 @@ public class MagicBookCommand implements TabExecutor {
                 ItemStack stack = infinite ? books.getStack(-1) : books.getStack();
                 player.getInventory().addItem(stack);
                 sender.sendMessage("§aEt voici ton livre !");
+                break;
             }
         }
 
@@ -101,7 +103,7 @@ public class MagicBookCommand implements TabExecutor {
                 return Arrays.asList("reload", "version", "give", "resetcd");
             case 2:
                 if (args[0].equalsIgnoreCase("give") || args[0].equalsIgnoreCase("resetcd")) {
-                    return Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+                    return Bukkit.getOnlinePlayers().stream().map(Player::getName).filter(s -> s.toLowerCase().startsWith(args[1].toLowerCase())).collect(Collectors.toList());
                 }
             case 3:
                 if (args[0].equalsIgnoreCase("give")) {

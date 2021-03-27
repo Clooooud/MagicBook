@@ -1,10 +1,7 @@
 package fr.cloud.magicbook.books.callables;
 
 import fr.cloud.magicbook.config.Parameter;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -21,6 +18,10 @@ public class GeyserCallable implements TargetCallable {
 
     @Override
     public boolean run(PlayerInteractEvent event, Player target) {
+
+        if (target.getGameMode() == GameMode.CREATIVE) {
+            return false;
+        }
 
         target.setVelocity(new Vector(0, 1, 0));
 

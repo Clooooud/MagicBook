@@ -18,6 +18,10 @@ public class HealCallable implements BookCallable {
             return false;
         }
 
+        if (player.getHealth() == 0) {
+            return false;
+        }
+
         player.setHealth(healthHealed + player.getHealth() > 20 ? 20 : healthHealed + player.getHealth());
         player.sendMessage("§aTu as été soigné !");
 

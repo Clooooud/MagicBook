@@ -16,8 +16,8 @@ import java.util.Map;
 
 public class ConfigCreator {
 
-    private MagicBook plugin;
-    private File file;
+    private final MagicBook plugin;
+    private final File file;
     private FileConfiguration configuration;
 
     private Map<Book, List<Field>> configurableFields;
@@ -52,7 +52,8 @@ public class ConfigCreator {
     public void save() {
         try {
             PrintStream bufferedWriter = new PrintStream(new FileOutputStream(file), true, "UTF8");
-            bufferedWriter.append(configuration.saveToString());
+            String csq = configuration.saveToString();
+            bufferedWriter.append(csq);
             bufferedWriter.close();
         } catch (UnsupportedEncodingException | FileNotFoundException e) {
             e.printStackTrace();

@@ -18,7 +18,7 @@ public class SpellUtils {
         for (double d = 0.5; d < range; d += 0.5) {
             Location newLoc = loc.clone().add(dir.clone().multiply(d));
 
-            Collection<Entity> nearbyEntities = newLoc.getWorld().getNearbyEntities(newLoc, 0.2, 0.5, 0.2);
+            Collection<Entity> nearbyEntities = newLoc.getWorld().getNearbyEntities(newLoc, 0.3, 0.5, 0.3);
             if (nearbyEntities.isEmpty()) {
                 continue;
             }

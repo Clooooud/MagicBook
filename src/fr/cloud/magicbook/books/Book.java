@@ -23,7 +23,7 @@ public class Book {
 
     @Getter private static final Set<Book> bookSet = new HashSet<>();
 
-    private static final Map<Book, Map<Player, Long>> cooldowns = new HashMap<>();
+    @Getter private static final Map<Book, Map<Player, Long>> cooldowns = new HashMap<>();
 
     public static void loadBooks() {
 
@@ -34,6 +34,8 @@ public class Book {
         bookSet.add(new Book("Drain", "Vole 1 coeur au joueur ciblé", "drain", 3, new DrainCallable(), 15));
         bookSet.add(new Book("Téléportation", "Téléporte au bloc visé", "teleport", 3, new TeleportCallable(), 15));
         bookSet.add(new Book("Saut", "Propulse vers l'avant", "jump", 3, new JumpCallable(), 25));
+        bookSet.add(new Book("Retour accéléré", "Réduit le temps de rechargement des autres livres", "rewind", 1, new RewindCallable(), 60));
+        bookSet.add(new Book("Épuisement", "Fatigue l'ennemi et l'empêche de courir", "hunger", 3, new HungerCallable(), 15));
 
         bookSet.forEach(book -> cooldowns.put(book, new HashMap<>()));
     }
