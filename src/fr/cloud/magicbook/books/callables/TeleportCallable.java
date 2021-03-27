@@ -63,6 +63,8 @@ public class TeleportCallable implements BookCallable {
                 ((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet);
                 player.getNearbyEntities(32,32,32).stream().filter(entity -> entity.getType() == EntityType.PLAYER).forEach(p -> ((CraftPlayer)p).getHandle().playerConnection.sendPacket(packet));
             }
+
+            player.sendMessage("§aTu viens de te téléporter !");
             return true;
         }
 

@@ -29,6 +29,8 @@ public class JumpCallable implements BookCallable {
 
         player.setVelocity(vector);
 
+        player.sendMessage("§cVous venez de vous propulser en avant !");
+
         return true;
     }
 }

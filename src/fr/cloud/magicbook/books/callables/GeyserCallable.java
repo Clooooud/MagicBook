@@ -45,6 +45,8 @@ public class GeyserCallable implements TargetCallable {
             }, i*2);
         }
 
+        event.getPlayer().sendMessage("§aTu as fait apparaître un geyser au pied de " + target.getName() + " !");
+
         return true;
     }
 
