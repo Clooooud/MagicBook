@@ -3,6 +3,7 @@ package fr.cloud.magicbook.books;
 import fr.cloud.magicbook.MagicBook;
 import fr.cloud.magicbook.books.callables.*;
 import fr.cloud.magicbook.config.Parameter;
+import fr.cloud.magicbook.player.MagicBookPlayer;
 import fr.cloud.magicbook.utils.ItemCreator;
 import fr.cloud.magicbook.utils.SpellUtils;
 import lombok.Getter;
@@ -23,10 +24,7 @@ public class Book {
 
     @Getter private static final Set<Book> bookSet = new HashSet<>();
 
-    @Getter private static final Map<Book, Map<Player, Long>> cooldowns = new HashMap<>();
-
     public static void loadBooks() {
-
         bookSet.add(new Book("Geyser", "Fais apparaître un geyser sous le joueur ciblé", "geyser", 3, new GeyserCallable(), 15));
         bookSet.add(new Book("Heal", "Redonne 4 coeurs", "heal", 3, new HealCallable(), 30));
         bookSet.add(new Book("Silence", "Empêche le joueur ciblé de lancer des sorts", "silence", 3, new SilenceCallable(), 45));
@@ -36,19 +34,6 @@ public class Book {
         bookSet.add(new Book("Saut", "Propulse vers l'avant", "jump", 3, new JumpCallable(), 25));
         bookSet.add(new Book("Retour accéléré", "Réduit le temps de rechargement des autres livres", "rewind", 1, new RewindCallable(), 60));
         bookSet.add(new Book("Épuisement", "Fatigue l'ennemi et l'empêche de courir", "hunger", 3, new HungerCallable(), 15));
-
-        bookSet.forEach(book -> cooldowns.put(book, new HashMap<>()));
-    }
-
-    public static void unloadPlayer(Player player) {
-        if (player == null) {
-            return;
-        }
-        resetCooldown(player);
-    }
-
-    public static void resetCooldown(Player player) {
-        bookSet.forEach(book -> cooldowns.get(book).remove(player));
     }
 
     public static Book getBook(String registryName) {
@@ -87,6 +72,7 @@ public class Book {
 
     public void launchSpell(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
+        final MagicBookPlayer bookPlayer = MagicBookPlayer.getPlayer(player);
 
         MagicBook plugin = (MagicBook) Bukkit.getPluginManager().getPlugin("MagicBook");
         if (plugin.getWorldGuardManager() != null) {
@@ -96,17 +82,17 @@ public class Book {
             }
         }
 
-        if (cooldowns.get(this).containsKey(player)) {
-            double cooldown = cooldowns.get(this).get(player) - System.currentTimeMillis();
+        if (bookPlayer.getCooldowns().containsKey(this)) {
+            double cooldown = bookPlayer.getCooldown(this) - System.currentTimeMillis();
             if (cooldown > 0) {
                 player.sendMessage(String.format("§cTu dois encore attendre %s secondes pour lancer ce sort.", (cooldown / 1000)));
                 return;
             }
 
-            cooldowns.get(this).remove(player);
+            bookPlayer.resetCooldown(this);
         }
 
-        if (player.hasMetadata("silence")) {
+        if (bookPlayer.isSilenced()) {
             player.sendMessage("§cTu es sous l'effet d'un silence ! Tu ne peux donc pas lancer de sorts !");
             return;
         }
@@ -138,7 +124,7 @@ public class Book {
             return;
         }
 
-        cooldowns.get(this).put(player, this.cooldown * 1000 + System.currentTimeMillis());
+        bookPlayer.getCooldowns().put(this, this.cooldown * 1000L + System.currentTimeMillis());
         player.setItemInHand(getStack(getAmount(event.getItem()) - 1));
     }
 

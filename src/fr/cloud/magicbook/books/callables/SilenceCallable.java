@@ -1,6 +1,7 @@
 package fr.cloud.magicbook.books.callables;
 
 import fr.cloud.magicbook.config.Parameter;
+import fr.cloud.magicbook.player.MagicBookPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -17,11 +18,12 @@ public class SilenceCallable implements TargetCallable {
         Player player = event.getPlayer();
 
         JavaPlugin plugin = getPlugin();
-        target.setMetadata("silence", new FixedMetadataValue(plugin, System.currentTimeMillis() + 2500));
+        MagicBookPlayer bookTarget = MagicBookPlayer.getPlayer(target);
+        bookTarget.setSilenced(true);
         target.sendMessage("§cVous avez été silence par " + player.getName());
         player.sendMessage("§aVous avez silence " + target.getName());
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> target.removeMetadata("silence", plugin), (long) (duration*20));
+        Bukkit.getScheduler().runTaskLater(plugin, () -> bookTarget.setSilenced(false), (long) (duration*20));
         return true;
     }
 

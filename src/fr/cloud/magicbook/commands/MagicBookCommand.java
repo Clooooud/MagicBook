@@ -2,6 +2,7 @@ package fr.cloud.magicbook.commands;
 
 import fr.cloud.magicbook.MagicBook;
 import fr.cloud.magicbook.books.Book;
+import fr.cloud.magicbook.player.MagicBookPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -48,14 +49,14 @@ public class MagicBookCommand implements TabExecutor {
                         return true;
                     }
 
-                    Book.resetCooldown(player);
+                    MagicBookPlayer.getPlayer(player).resetCooldowns();
                 } else {
                     if (!(sender instanceof Player)) {
                         sender.sendMessage("§cUsage: /magicbook resetcd <player>");
                         return true;
                     }
 
-                    Book.resetCooldown((Player) sender);
+                    MagicBookPlayer.getPlayer((Player) sender).resetCooldowns();
                 }
                 break;
             }

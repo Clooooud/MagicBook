@@ -2,6 +2,7 @@ package fr.cloud.magicbook.books.callables;
 
 import fr.cloud.magicbook.books.Book;
 import fr.cloud.magicbook.config.Parameter;
+import fr.cloud.magicbook.player.MagicBookPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -12,13 +13,14 @@ public class RewindCallable implements BookCallable {
     @Override
     public boolean run(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        MagicBookPlayer bookPlayer = MagicBookPlayer.getPlayer(player);
 
-        if (Book.getCooldowns().entrySet().stream().noneMatch(entry -> entry.getValue().containsKey(player) && entry.getValue().get(player) - System.currentTimeMillis() > 0)) {
+        if (bookPlayer.getCooldowns().size() == 0 && bookPlayer.getCooldowns().values().stream().anyMatch(l -> System.currentTimeMillis() - l < 0)) {
             player.sendMessage("§cVous n'avez aucun temps de rechargement sur vos livres");
             return false;
         }
 
-        Book.getCooldowns().entrySet().stream().filter(entry -> entry.getValue().containsKey(player)).forEach(entry -> entry.getValue().put(player, entry.getValue().get(player) - (long)(entry.getKey().getCooldown() * (cooldownReducePercentage / 100)) * 1000));
+        bookPlayer.getCooldowns().replaceAll((book, l) -> l - (long)(book.getCooldown() * (cooldownReducePercentage / 100)) * 1000);
         player.sendMessage("§aVos temps de rechargement ont été réduit.");
 
         // TODO: particules

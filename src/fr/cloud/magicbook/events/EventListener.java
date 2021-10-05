@@ -2,10 +2,12 @@ package fr.cloud.magicbook.events;
 
 import fr.cloud.magicbook.MagicBook;
 import fr.cloud.magicbook.books.Book;
+import fr.cloud.magicbook.player.MagicBookPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -15,6 +17,11 @@ public class EventListener implements Listener {
 
     public EventListener(MagicBook plugin) {
         this.plugin = plugin;
+    }
+
+    @EventHandler
+    public void onAsyncJoin(AsyncPlayerPreLoginEvent event) {
+        MagicBookPlayer.loadPlayer(event.getName());
     }
 
     @EventHandler
@@ -32,7 +39,7 @@ public class EventListener implements Listener {
             return;
         }
 
-        if(e.getItem().getItemMeta().getDisplayName() == null ) {
+        if(e.getItem().getItemMeta().getDisplayName() == null) {
             return;
         }
 
@@ -54,11 +61,11 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
-        Book.resetCooldown(e.getEntity());
+        MagicBookPlayer.getPlayer(e.getEntity()).resetCooldowns();
     }
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e) {
-        Book.unloadPlayer(e.getPlayer());
+        MagicBookPlayer.unloadPlayer(e.getPlayer());
     }
 }
