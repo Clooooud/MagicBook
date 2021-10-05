@@ -112,6 +112,12 @@ public class Book {
                 }
             }
 
+            MagicBookPlayer bookTarget = MagicBookPlayer.getPlayer(target);
+            if (!bookTarget.canBeTargeted()) {
+                player.sendMessage("§cCe joueur ne peut pas être ciblé, il est sous l'effet d'un sort le protégeant !");
+                return;
+            }
+
             ((TargetCallable) spell).run(event, target);
 
         } else {

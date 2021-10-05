@@ -1,6 +1,7 @@
 package fr.cloud.magicbook.player;
 
 import fr.cloud.magicbook.books.Book;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -34,9 +35,9 @@ public class MagicBookPlayer {
 
     private final String username;
 
-    private boolean canUseBooks;
-    private boolean isSilenced;
-
+    @Getter(AccessLevel.NONE)
+    private boolean canBeTargeted = true;
+    private boolean isSilenced = false;
     private final HashMap<Book, Long> cooldowns = new HashMap<>();
 
     public Long getCooldown(Book book) {
@@ -51,5 +52,11 @@ public class MagicBookPlayer {
         cooldowns.remove(book);
     }
 
+    public boolean canBeTargeted() {
+        return canBeTargeted;
+    }
 
+    public void setCanBeTargeted(boolean canBeTargeted) {
+        this.canBeTargeted = canBeTargeted;
+    }
 }
