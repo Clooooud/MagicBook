@@ -1,6 +1,5 @@
 package fr.cloud.magicbook.books.callables;
 
-import fr.cloud.magicbook.books.Book;
 import fr.cloud.magicbook.config.Parameter;
 import fr.cloud.magicbook.player.MagicBookPlayer;
 import org.bukkit.entity.Player;

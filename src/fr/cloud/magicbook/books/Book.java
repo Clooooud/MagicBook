@@ -118,7 +118,9 @@ public class Book {
                 return;
             }
 
-            ((TargetCallable) spell).run(event, target);
+            if (!((TargetCallable) spell).run(event, target)) {
+                return;
+            }
 
         } else {
             if (!spell.run(event))
