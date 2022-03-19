@@ -8,6 +8,7 @@ import org.bukkit.util.Vector;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.stream.Stream;
 
 public class SpellUtils {
 
@@ -23,8 +24,10 @@ public class SpellUtils {
                 continue;
             }
 
-            if (nearbyEntities.stream().anyMatch(entity -> entity.getType() == EntityType.PLAYER && !entity.getUniqueId().equals(player.getUniqueId()))) {
-                return nearbyEntities.stream().filter(entity -> entity.getType() == EntityType.PLAYER && !entity.getUniqueId().equals(player.getUniqueId())).map(entity -> (Player) entity).findFirst().orElse(null);
+            Stream<Entity> entityStream = nearbyEntities.stream().filter(entity -> entity.getType() == EntityType.PLAYER && !entity.getUniqueId().equals(player.getUniqueId()));
+
+            if (entityStream.findAny().isPresent()) {
+                return entityStream.map(entity -> (Player) entity).findFirst().orElse(null);
             }
         }
         return null;

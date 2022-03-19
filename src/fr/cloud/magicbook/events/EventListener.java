@@ -26,7 +26,6 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onBookUse(PlayerInteractEvent event) {
-
         if (!(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             return;
         }
@@ -59,7 +58,6 @@ public class EventListener implements Listener {
         }
 
         book.launchSpell(event);
-
         event.setCancelled(true);
     }
 
