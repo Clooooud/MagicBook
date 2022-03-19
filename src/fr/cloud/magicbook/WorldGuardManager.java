@@ -21,14 +21,13 @@ public class WorldGuardManager {
     }
 
     public void load() {
-
         FlagRegistry registry = WorldGuardPlugin.inst().getFlagRegistry();
         try {
             StateFlag flag = new StateFlag("use-magic-book", true);
             registry.register(flag);
             BOOK_FLAG = flag;
         } catch (FlagConflictException e) {
-            Flag<?> existing = registry.get("my-custom-flag");
+            Flag<?> existing = registry.get("use-magic-book");
             if (existing instanceof StateFlag) {
                 BOOK_FLAG = (StateFlag) existing;
             } else {

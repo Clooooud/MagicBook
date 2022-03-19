@@ -25,47 +25,47 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void onBookUse(PlayerInteractEvent e) {
+    public void onBookUse(PlayerInteractEvent event) {
 
-        if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+        if (!(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             return;
         }
 
-        if(e.getItem() == null) {
+        if(event.getItem() == null) {
             return;
         }
 
-        if(e.getItem().getItemMeta() == null) {
+        if(event.getItem().getItemMeta() == null) {
             return;
         }
 
-        if(e.getItem().getItemMeta().getDisplayName() == null) {
+        if(event.getItem().getItemMeta().getDisplayName() == null) {
             return;
         }
 
-        Book book = Book.identify(e.getItem());
+        Book book = Book.identify(event.getItem());
 
         if (book == null) {
             return;
         }
 
-        if(e.getItem().getAmount() > 1) {
-            e.getPlayer().sendMessage("§cVous ne pouvez utiliser les livres s'ils sont stackés");
+        if(event.getItem().getAmount() > 1) {
+            event.getPlayer().sendMessage("§cVous ne pouvez utiliser les livres s'ils sont stackés");
             return;
         }
 
-        book.launchSpell(e);
+        book.launchSpell(event);
 
-        e.setCancelled(true);
+        event.setCancelled(true);
     }
 
     @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e) {
-        MagicBookPlayer.getPlayer(e.getEntity()).resetCooldowns();
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        MagicBookPlayer.getPlayer(event.getEntity()).resetCooldowns();
     }
 
     @EventHandler
-    public void onPlayerLeave(PlayerQuitEvent e) {
-        MagicBookPlayer.unloadPlayer(e.getPlayer());
+    public void onPlayerLeave(PlayerQuitEvent event) {
+        MagicBookPlayer.unloadPlayer(event.getPlayer());
     }
 }

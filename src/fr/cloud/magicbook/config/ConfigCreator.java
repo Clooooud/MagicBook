@@ -28,7 +28,6 @@ public class ConfigCreator {
     }
 
     public void load() {
-
         configurableFields = getConfigurableFields();
         createFile();
         setDefaults();
@@ -97,7 +96,6 @@ public class ConfigCreator {
                     fieldList.add(declaredField);
                 }
             }
-
             for (Field declaredField : book.getSpell().getClass().getDeclaredFields()) {
                 if (declaredField.isAnnotationPresent(Parameter.class)) {
                     declaredField.setAccessible(true);
