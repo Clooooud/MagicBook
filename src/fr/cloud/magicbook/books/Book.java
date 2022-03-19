@@ -44,7 +44,7 @@ public class Book {
         ItemMeta meta = stack.getItemMeta();
         List<String> lore = meta.getLore();
 
-        if (lore.size() != 4)
+        if (lore == null || lore.size() != 4)
             return null;
 
         final String hiddenString = ChatColor.stripColor(lore.get(3));
