@@ -43,13 +43,15 @@ public class Book {
     public static Book identify(ItemStack stack) {
         ItemMeta meta = stack.getItemMeta();
 
-        if (!meta.hasLore())
+        if (!meta.hasLore()) {
             return null;
+        }
 
         List<String> lore = meta.getLore();
 
-        if (lore.size() != 4)
+        if (lore.size() != 4) {
             return null;
+        }
 
         final String hiddenString = ChatColor.stripColor(lore.get(3));
 
@@ -127,8 +129,9 @@ public class Book {
             }
 
         } else {
-            if (!spell.run(event))
+            if (!spell.run(event)) {
                 return;
+            }
         }
 
 
@@ -157,8 +160,9 @@ public class Book {
     }
 
     public ItemStack getStack(int amount) {
-        if (amount == 0)
+        if (amount == 0) {
             return new ItemStack(Material.AIR);
+        }
         return new ItemCreator(Material.BOOK).name("§6" + name + " §7(" + amount + " utilisations)").lore(Arrays.asList(desc, " ", "§aCe livre a encore §6" + amount + " §autilisation(s)", getHiddenString(amount))).getStack();
     }
 

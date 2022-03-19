@@ -25,10 +25,11 @@ public class GeyserCallable implements TargetCallable {
 
         target.setVelocity(new Vector(0, 1, 0));
 
-        if(target.getHealth() >= damage)
+        if(target.getHealth() >= damage) {
             target.setHealth(target.getHealth()-damage);
-        else
+        } else {
             target.setHealth(0);
+        }
 
         Location location = target.getLocation();
         location.getWorld().playSound(location, Sound.HURT_FLESH, 1, 1);

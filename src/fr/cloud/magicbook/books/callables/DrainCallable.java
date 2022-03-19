@@ -23,10 +23,11 @@ public class DrainCallable implements TargetCallable {
     public boolean run(PlayerInteractEvent event, Player target) {
         Player player = event.getPlayer();
 
-        if(target.getHealth() >= damage)
+        if(target.getHealth() >= damage) {
             target.setHealth(target.getHealth()-damage);
-        else
+        } else {
             target.setHealth(0);
+        }
 
         Location start = player.getLocation().add(0, 0.5, 0);
         Location end = target.getLocation().add(0, 0.5, 0);
