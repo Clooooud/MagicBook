@@ -47,7 +47,7 @@ public class DrainCallable implements TargetCallable {
         }
 
         player.setHealth(damage + player.getHealth() > 20 ? 20 : damage + player.getHealth());
-        player.sendMessage("§aTu as drainé de la vie de " + target.getName() + " !");
+        player.sendMessage("§aTu as drainé la vie de " + target.getName() + " !");
         return true;
     }
 
