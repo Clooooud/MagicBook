@@ -31,15 +31,19 @@ public class EventListener implements Listener {
             return;
         }
 
-        if(event.getItem() == null) {
+        if(!event.hasItem()) {
             return;
         }
 
-        if(event.getItem().getItemMeta() == null) {
+        if(!event.getItem().hasItemMeta()) {
             return;
         }
 
-        if(event.getItem().getItemMeta().getDisplayName() == null) {
+        if(!event.getItem().getItemMeta().hasDisplayName()) {
+            return;
+        }
+
+        if(!event.getItem().getItemMeta().hasLore()) {
             return;
         }
 
