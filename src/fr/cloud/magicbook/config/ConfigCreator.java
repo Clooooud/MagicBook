@@ -3,7 +3,6 @@ package fr.cloud.magicbook.config;
 import fr.cloud.magicbook.MagicBook;
 import fr.cloud.magicbook.books.Book;
 import fr.cloud.magicbook.books.callables.BookCallable;
-import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
