@@ -23,8 +23,8 @@ public class DrainCallable implements TargetCallable {
     public boolean run(PlayerInteractEvent event, Player target) {
         Player player = event.getPlayer();
 
-        if(target.getHealth() >= damage) {
-            target.setHealth(target.getHealth()-damage);
+        if (target.getHealth() >= damage) {
+            target.setHealth(target.getHealth() - damage);
         } else {
             target.setHealth(0);
         }
@@ -42,8 +42,8 @@ public class DrainCallable implements TargetCallable {
             l.add(v);
 
             PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.SPELL_MOB, true, (float) l.getX(), (float) l.getY(), (float) l.getZ(), 0, 0, 0, 0, 10);
-            ((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet);
-            player.getNearbyEntities(32,32,32).stream().filter(entity -> entity.getType() == EntityType.PLAYER).forEach(p -> ((CraftPlayer)p).getHandle().playerConnection.sendPacket(packet));
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+            player.getNearbyEntities(32, 32, 32).stream().filter(entity -> entity.getType() == EntityType.PLAYER).forEach(p -> ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet));
         }
 
         player.setHealth(damage + player.getHealth() > 20 ? 20 : damage + player.getHealth());

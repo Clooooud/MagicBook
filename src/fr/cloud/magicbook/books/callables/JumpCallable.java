@@ -13,7 +13,7 @@ public class JumpCallable implements BookCallable {
 
         Vector vector = player.getLocation().getDirection().normalize();
 
-        if (((Entity)player).isOnGround()) {
+        if (((Entity) player).isOnGround()) {
 
             vector.setX(vector.getX() * 8);
             vector.setZ(vector.getZ() * 8);

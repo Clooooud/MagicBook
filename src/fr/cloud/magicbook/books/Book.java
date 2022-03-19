@@ -16,13 +16,17 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Book {
 
     private static final String SEPARATOR = "#";
 
-    @Getter private static final Set<Book> bookSet = new HashSet<>();
+    @Getter
+    private static final Set<Book> bookSet = new HashSet<>();
 
     public static void loadBooks() {
         bookSet.add(new Book("Geyser", "Fais apparaître un geyser sous le joueur ciblé", "geyser", 3, new GeyserCallable(), 15));
@@ -62,10 +66,16 @@ public class Book {
         return bookSet.stream().filter(book -> book.getRegistryName().equals(hiddenString.split(SEPARATOR)[0])).findAny().orElse(null);
     }
 
-    @Parameter @Getter private final String name, desc;
-    @Getter private final String registryName;
-    @Parameter @Getter private final int baseAmount, cooldown;
-    @Getter private final BookCallable spell;
+    @Parameter
+    @Getter
+    private final String name, desc;
+    @Getter
+    private final String registryName;
+    @Parameter
+    @Getter
+    private final int baseAmount, cooldown;
+    @Getter
+    private final BookCallable spell;
 
     public Book(String name, String desc, String registryName, int baseAmount, BookCallable spell, int cooldown) {
         this.name = name;

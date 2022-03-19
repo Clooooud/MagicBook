@@ -14,8 +14,10 @@ public class HungerCallable implements TargetCallable {
 
     private HashMap<Player, BukkitTask> hungered = new HashMap<>();
 
-    @Parameter private double range = 15;
-    @Parameter private double duration = 4;
+    @Parameter
+    private double range = 15;
+    @Parameter
+    private double duration = 4;
 
     @Override
     public boolean run(PlayerInteractEvent event, Player target) {
@@ -34,7 +36,7 @@ public class HungerCallable implements TargetCallable {
         target.setFoodLevel(4);
 
         for (int i = 0; i < 3; i++) {
-            int delay = i*5;
+            int delay = i * 5;
             Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> target.getWorld().playSound(target.getLocation(), delay == 10 ? Sound.BURP : Sound.EAT, 1, 1), delay);
         }
 

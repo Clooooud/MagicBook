@@ -7,7 +7,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class RewindCallable implements BookCallable {
 
-    @Parameter private double cooldownReducePercentage = 75;
+    @Parameter
+    private double cooldownReducePercentage = 75;
 
     @Override
     public boolean run(PlayerInteractEvent event) {
@@ -19,7 +20,7 @@ public class RewindCallable implements BookCallable {
             return false;
         }
 
-        bookPlayer.getCooldowns().replaceAll((book, l) -> l - (long)(book.getCooldown() * (cooldownReducePercentage / 100)) * 1000);
+        bookPlayer.getCooldowns().replaceAll((book, l) -> l - (long) (book.getCooldown() * (cooldownReducePercentage / 100)) * 1000);
         player.sendMessage("§aVos temps de rechargement ont été réduit.");
 
         // TODO: particules

@@ -13,7 +13,7 @@ public class HealCallable implements BookCallable {
     public boolean run(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if(player.getHealth() == 20) {
+        if (player.getHealth() == 20) {
             player.sendMessage("§cTu as déjà toute ta vie !");
             return false;
         }

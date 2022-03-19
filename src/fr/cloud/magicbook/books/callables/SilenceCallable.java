@@ -22,7 +22,7 @@ public class SilenceCallable implements TargetCallable {
         target.sendMessage("§cVous avez été silence par " + player.getName());
         player.sendMessage("§aVous avez silence " + target.getName());
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> bookTarget.setSilenced(false), (long) (duration*20));
+        Bukkit.getScheduler().runTaskLater(plugin, () -> bookTarget.setSilenced(false), (long) (duration * 20));
         return true;
     }
 

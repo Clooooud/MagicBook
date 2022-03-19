@@ -25,8 +25,8 @@ public class GeyserCallable implements TargetCallable {
 
         target.setVelocity(new Vector(0, 1, 0));
 
-        if(target.getHealth() >= damage) {
-            target.setHealth(target.getHealth()-damage);
+        if (target.getHealth() >= damage) {
+            target.setHealth(target.getHealth() - damage);
         } else {
             target.setHealth(0);
         }
@@ -35,15 +35,15 @@ public class GeyserCallable implements TargetCallable {
         location.getWorld().playSound(location, Sound.HURT_FLESH, 1, 1);
 
         JavaPlugin plugin = getPlugin();
-        for(int i = 0; i <= 2; i++) {
+        for (int i = 0; i <= 2; i++) {
             int finalI = i;
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 Block block = location.clone().add(0, finalI, 0).getBlock();
-                if(block.getType() == Material.AIR) {
+                if (block.getType() == Material.AIR) {
                     block.setType(Material.STATIONARY_WATER);
                     Bukkit.getScheduler().runTaskLater(plugin, () -> block.setType(Material.AIR), 5);
                 }
-            }, i*2);
+            }, i * 2);
         }
 
         event.getPlayer().sendMessage("§aTu as fait apparaître un geyser au pied de " + target.getName() + " !");

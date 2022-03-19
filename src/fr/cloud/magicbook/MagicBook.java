@@ -12,12 +12,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class MagicBook extends JavaPlugin {
 
-    @Getter private WorldGuardManager worldGuardManager;
-    @Getter private ConfigCreator configCreator;
+    @Getter
+    private WorldGuardManager worldGuardManager;
+    @Getter
+    private ConfigCreator configCreator;
 
     @Override
     public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new EventListener(), this);
 
         PluginCommand magicBook = getCommand("magicbook");
         magicBook.setExecutor(new MagicBookCommand(this));

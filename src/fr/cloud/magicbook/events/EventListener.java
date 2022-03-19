@@ -1,6 +1,5 @@
 package fr.cloud.magicbook.events;
 
-import fr.cloud.magicbook.MagicBook;
 import fr.cloud.magicbook.books.Book;
 import fr.cloud.magicbook.player.MagicBookPlayer;
 import org.bukkit.event.EventHandler;
@@ -13,12 +12,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class EventListener implements Listener {
 
-    private MagicBook plugin;
-
-    public EventListener(MagicBook plugin) {
-        this.plugin = plugin;
-    }
-
     @EventHandler
     public void onAsyncJoin(AsyncPlayerPreLoginEvent event) {
         MagicBookPlayer.loadPlayer(event.getName());
@@ -30,19 +23,19 @@ public class EventListener implements Listener {
             return;
         }
 
-        if(!event.hasItem()) {
+        if (!event.hasItem()) {
             return;
         }
 
-        if(!event.getItem().hasItemMeta()) {
+        if (!event.getItem().hasItemMeta()) {
             return;
         }
 
-        if(!event.getItem().getItemMeta().hasDisplayName()) {
+        if (!event.getItem().getItemMeta().hasDisplayName()) {
             return;
         }
 
-        if(!event.getItem().getItemMeta().hasLore()) {
+        if (!event.getItem().getItemMeta().hasLore()) {
             return;
         }
 
@@ -52,7 +45,7 @@ public class EventListener implements Listener {
             return;
         }
 
-        if(event.getItem().getAmount() > 1) {
+        if (event.getItem().getAmount() > 1) {
             event.getPlayer().sendMessage("§cVous ne pouvez utiliser les livres s'ils sont stackés");
             return;
         }

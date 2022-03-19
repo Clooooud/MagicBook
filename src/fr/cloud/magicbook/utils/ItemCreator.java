@@ -10,8 +10,8 @@ import java.util.List;
 
 public class ItemCreator {
 
-    private ItemStack stack;
-    private ItemMeta meta;
+    private final ItemStack stack;
+    private final ItemMeta meta;
 
     public ItemCreator(Material material) {
         stack = new ItemStack(material);

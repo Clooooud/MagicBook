@@ -24,7 +24,7 @@ public class TeleportCallable implements BookCallable {
     public boolean run(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Block block = player.getTargetBlock((Set<Material>) null, range);
-        Location start = player.getLocation().add(0,0.5,0);
+        Location start = player.getLocation().add(0, 0.5, 0);
 
         if (block.getType() == Material.AIR) {
             player.sendMessage("§cHors de portée !");
@@ -50,7 +50,7 @@ public class TeleportCallable implements BookCallable {
             to.add(0.5, 0, 0.5);
             player.teleport(to);
 
-            to.add(0,0.5,0);
+            to.add(0, 0.5, 0);
 
             double d = start.distance(to) / 10;
             Vector direction = to.toVector().subtract(start.toVector()).normalize();
@@ -60,8 +60,8 @@ public class TeleportCallable implements BookCallable {
                 l.add(v);
 
                 PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.SPELL_MOB, true, (float) l.getX(), (float) l.getY(), (float) l.getZ(), 0, 0, 0, 0, 10);
-                ((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet);
-                player.getNearbyEntities(32,32,32).stream().filter(entity -> entity.getType() == EntityType.PLAYER).forEach(p -> ((CraftPlayer)p).getHandle().playerConnection.sendPacket(packet));
+                ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+                player.getNearbyEntities(32, 32, 32).stream().filter(entity -> entity.getType() == EntityType.PLAYER).forEach(p -> ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet));
             }
 
             player.sendMessage("§aTu viens de te téléporter !");
