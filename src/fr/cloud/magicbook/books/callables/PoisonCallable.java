@@ -18,7 +18,7 @@ public class PoisonCallable implements TargetCallable {
     @Override
     public boolean run(PlayerInteractEvent event, Player target) {
         target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, (int) (duration * 20), amplifier, true, true));
-        event.getPlayer().sendMessage("§cVous avez empoisonné " + target.getName() + " !");
+        event.getPlayer().sendMessage("§aVous avez empoisonné " + target.getName() + " !");
         return true;
     }
 
