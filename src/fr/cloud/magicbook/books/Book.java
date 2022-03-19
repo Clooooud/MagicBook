@@ -42,9 +42,13 @@ public class Book {
 
     public static Book identify(ItemStack stack) {
         ItemMeta meta = stack.getItemMeta();
+
+        if (!meta.hasLore())
+            return null;
+
         List<String> lore = meta.getLore();
 
-        if (lore == null || lore.size() != 4)
+        if (lore.size() != 4)
             return null;
 
         final String hiddenString = ChatColor.stripColor(lore.get(3));
